@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão de Banco de Dados e BI — ESPM</title>
+<style>
+:root {
+  --bg:     #fdf8f6;
+  --s1:     #f5ecea;
+  --s2:     #ecdeda;
+  --border: #dfc9c0;
+  --c1:     #7a1a1a;
+  --c2:     #b83030;
+  --text:   #1a0d0d;
+  --muted:  #8a6060;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(122,26,26,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(122,26,26,.045) 1px, transparent 1px);
+  background-size: 36px 36px;
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+.site-header {
+  text-align: center;
+  padding: 72px 24px 60px;
+}
+.eyebrow {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--c1); font-weight: 600; margin-bottom: 18px;
+}
+.site-title {
+  font-size: clamp(36px, 6vw, 62px);
+  font-weight: 900; line-height: 1.05;
+  background: linear-gradient(140deg, #1a0d0d 30%, #7a1a1a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 16px;
+  letter-spacing: -.5px;
+}
+.site-sub {
+  font-size: 15px; color: var(--muted); letter-spacing: .2px;
+}
+
+/* ── TIMELINE ── */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px 96px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* vertical connector */
+.conn {
+  width: 1px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.conn-sm { height: 20px; }
+.conn-md { height: 32px; }
+
+/* pill caps */
+.pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 9px 28px; border-radius: 999px;
+  font-size: 9.5px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+}
+.pill-start {
+  background: var(--s1); border: 1.5px solid var(--border); color: var(--c1);
+}
+.pill-end {
+  background: var(--c1); border: 1.5px solid var(--c1); color: #fdf8f6;
+}
+
+/* section label */
+.sect {
+  align-self: flex-start;
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 0 2px;
+}
+.sect::before {
+  content: '';
+  display: block;
+  width: 3px; height: 16px; border-radius: 2px;
+  background: var(--c2); flex-shrink: 0;
+}
+.sect-label {
+  font-size: 9px; letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--c2); font-weight: 700;
+}
+
+/* ── LESSON CARD ── */
+.lesson {
+  display: flex; align-items: center; gap: 18px;
+  width: 100%; border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 22px 22px 22px 18px;
+  background: var(--s1);
+  text-decoration: none; color: inherit;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+
+/* active (aula 1) */
+.lesson.active {
+  border-color: var(--c1);
+  background: #ffffff;
+  cursor: pointer;
+}
+.lesson.active:hover {
+  border-color: var(--c2);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(122,26,26,.11);
+}
+.lesson.active:hover .l-arrow { opacity: 1; transform: translate(2px, -1px); }
+
+/* inactive (aulas 2–8) */
+.lesson.off {
+  opacity: .46;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* number */
+.l-num {
+  font-size: 40px; font-weight: 900; line-height: 1;
+  color: var(--c1); opacity: .16;
+  min-width: 46px; text-align: center; flex-shrink: 0;
+}
+.lesson.active .l-num { opacity: .35; }
+
+/* text */
+.l-info { flex: 1; min-width: 0; }
+.l-title {
+  font-size: 16px; font-weight: 700; line-height: 1.3; margin-bottom: 4px;
+}
+.l-sub {
+  font-size: 12px; color: var(--muted); line-height: 1.55;
+}
+
+/* arrow */
+.l-arrow {
+  font-size: 17px; color: var(--c1);
+  opacity: 0; transition: opacity .2s, transform .2s;
+  flex-shrink: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 520px) {
+  .site-header { padding: 52px 20px 44px; }
+  .timeline { padding: 0 16px 72px; }
+  .l-num { font-size: 32px; min-width: 38px; }
+  .l-title { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="eyebrow">ESPM · Pós-Graduação em Data Analytics e Marketing</div>
+  <div class="site-title">Gestão de Banco<br>de Dados e BI</div>
+  <div class="site-sub">Jornada da disciplina — 8 aulas · 24 horas · Metodologia PBL</div>
+</header>
+
+<div class="timeline">
+
+  <div class="pill pill-start">Início</div>
+  <div class="conn conn-md"></div>
+
+  <!-- 01 — ATIVA -->
+  <a class="lesson active" href="aula1.html">
+    <div class="l-num">1</div>
+    <div class="l-info">
+      <div class="l-title">O Dado que Você Não Enxerga</div>
+      <div class="l-sub">Dado como Ativo · Informação · Decisão · Estrutura de Dados</div>
+    </div>
+    <span class="l-arrow">↗</span>
+  </a>
+
+  <div class="conn conn-md"></div>
+  <div class="sect"><span class="sect-label">Fundamentos</span></div>
+  <div class="conn conn-sm"></div>
+
+  <!-- 02 -->
+  <div class="lesson off">
+    <div class="l-num">2</div>
+    <div class="l-info">
+      <div class="l-title">A Arquitetura do Caos</div>
+      <div class="l-sub">Entidades · Atributos · Cardinalidade · Chaves · 1FN · 2FN · 3FN</div>
+    </div>
+  </div>
+  <div class="conn conn-md"></div>
+
+  <!-- 03 -->
+  <div class="lesson off">
+    <div class="l-num">3</div>
+    <div class="l-info">
+      <div class="l-title">A Linguagem das Respostas</div>
+      <div class="l-sub">DDL · DML · SELECT · JOIN · GROUP BY</div>
+    </div>
+  </div>
+  <div class="conn conn-md"></div>
+
+  <!-- 04 -->
+  <div class="lesson off">
+    <div class="l-num">4</div>
+    <div class="l-info">
+      <div class="l-title">O Refino Analítico</div>
+      <div class="l-sub">DW · Star Schema · Snowflake · Fatos · Dimensões</div>
+    </div>
+  </div>
+
+  <div class="conn conn-md"></div>
+  <div class="sect"><span class="sect-label">Avançado</span></div>
+  <div class="conn conn-sm"></div>
+
+  <!-- 05 -->
+  <div class="lesson off">
+    <div class="l-num">5</div>
+    <div class="l-info">
+      <div class="l-title">A Visualização do Sucesso</div>
+      <div class="l-sub">BI · Tableau · KPIs · Storytelling com dados</div>
+    </div>
+  </div>
+  <div class="conn conn-md"></div>
+
+  <!-- 06 -->
+  <div class="lesson off">
+    <div class="l-num">6</div>
+    <div class="l-info">
+      <div class="l-title">A Escala do Big Data</div>
+      <div class="l-sub">Big Data · NoSQL · MongoDB · JSON</div>
+    </div>
+  </div>
+  <div class="conn conn-md"></div>
+
+  <!-- 07 -->
+  <div class="lesson off">
+    <div class="l-num">7</div>
+    <div class="l-info">
+      <div class="l-title">O Guardião dos Ativos</div>
+      <div class="l-sub">DAMA-DMBOK · LGPD · Segurança · Conformidade</div>
+    </div>
+  </div>
+
+  <div class="conn conn-md"></div>
+  <div class="sect"><span class="sect-label">Projeto</span></div>
+  <div class="conn conn-sm"></div>
+
+  <!-- 08 -->
+  <div class="lesson off">
+    <div class="l-num">8</div>
+    <div class="l-info">
+      <div class="l-title">A Prova de Valor</div>
+      <div class="l-sub">Caso Master · Apresentação · ER · SQL · Dashboard</div>
+    </div>
+  </div>
+
+  <div class="conn conn-md"></div>
+  <div class="pill pill-end">Fim</div>
+
+</div>
+</body>
+</html>
