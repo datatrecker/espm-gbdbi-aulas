@@ -193,6 +193,18 @@ body {
 .tbl td:first-child { color: var(--c1); font-weight: 700; white-space: nowrap; }
 .tbl tr:last-child td { border-bottom: none; }
 .tbl tr:hover td { background: var(--s2); }
+
+/* ── BLOOM OBJECTIVES ── */
+.bloom-card { width: 100%; max-width: 720px; background: var(--s1); border: 1px solid var(--border); border-left: 3px solid var(--c1); border-radius: 2px 10px 10px 2px; padding: 22px 24px; margin-bottom: 4px; }
+.bloom-eyebrow { font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700; color: var(--c1); margin-bottom: 16px; }
+.bloom-list { display: flex; flex-direction: column; gap: 11px; }
+.bloom-item { font-size: 13.5px; line-height: 1.55; color: var(--text); display: flex; align-items: baseline; gap: 12px; }
+.bloom-level { font-size: 8.5px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+.bloom-level.l1 { background: var(--s1); color: var(--c1); border: 1px solid var(--border); }
+.bloom-level.l2 { background: var(--s2); color: var(--c1); border: 1px solid var(--border); }
+.bloom-level.l3 { background: #e0cccc; color: var(--c1); border: 1px solid #c8aeaa; }
+.bloom-level.l4 { background: #cdb5b5; color: var(--c1); border: 1px solid #b89898; }
+.bloom-level.l5 { background: var(--c1); color: #fdf8f6; border: 1px solid var(--c1); }
 </style>
 </head>
 <body>
@@ -210,6 +222,12 @@ body {
     <div class="m-sub">Dado como Ativo · Informação · Decisão · Estrutura de Dados</div>
   </div>
   <div class="m-grid">
+    <div class="mcard" onclick="show('p0')">
+      <div class="mc-num">00</div>
+      <div class="mc-h">Objetivos da Aula</div>
+      <p class="mc-p">O que você vai aprender hoje — cinco objetivos baseados na Taxonomia de Bloom.</p>
+      <span class="mc-arrow">↗</span>
+    </div>
     <div class="mcard" onclick="show('p1')">
       <div class="mc-num">01</div>
       <div class="mc-h">Fontes Geradoras de Dados</div>
@@ -251,6 +269,35 @@ body {
       <div class="mc-h">A Estrutura Determina as Perguntas</div>
       <p class="mc-p">Como a arquitetura do BD limita as perguntas possíveis de negócio.</p>
       <span class="mc-arrow">↗</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     P0 — OBJETIVOS DA AULA (BLOOM)
+══════════════════════════════════════ -->
+<div id="p0" class="page">
+  <nav class="t-nav">
+    <button class="back" onclick="show('menu')">← Menu</button>
+    <span class="t-label">00 · Objetivos da Aula</span>
+  </nav>
+  <div class="t-body">
+    <div class="t-title">O que você vai<br><em>aprender hoje.</em></div>
+
+    <div class="bloom-card">
+      <div class="bloom-eyebrow">Objetivos — Taxonomia de Bloom</div>
+      <div class="bloom-list">
+        <div class="bloom-item"><span class="bloom-level l1">Lembrar</span> Reconhecer as três fontes geradoras de dados (pessoas, máquinas, corporações) e os principais tipos de bancos de dados, associando cada um às suas características.</div>
+        <div class="bloom-item"><span class="bloom-level l2">Compreender</span> Explicar a cadeia dado → informação → decisão e distinguir o uso operacional (OLTP) do analítico (OLAP) em situações concretas de negócio.</div>
+        <div class="bloom-item"><span class="bloom-level l3">Aplicar</span> Classificar exemplos de fontes, dados e sistemas de acordo com as categorias apresentadas e mapear a jornada de um dado em um processo real.</div>
+        <div class="bloom-item"><span class="bloom-level l4">Analisar</span> Examinar como a estrutura de um banco de dados determina quais perguntas de negócio podem ou não ser respondidas, identificando lacunas arquiteturais.</div>
+        <div class="bloom-item"><span class="bloom-level l5">Avaliar</span> Julgar se uma arquitetura de dados é adequada para suportar um determinado processo de decisão ou análise, argumentando com base nos conceitos da aula.</div>
+      </div>
+    </div>
+
+    <div class="pg-nav">
+      <button class="pn-btn" onclick="show('menu')">← Início</button>
+      <button class="pn-btn pn-fwd" onclick="show('p1')">Fontes de Dados →</button>
     </div>
   </div>
 </div>
@@ -308,7 +355,7 @@ body {
       </div>
     </div>
     <div class="pg-nav">
-      <button class="pn-btn" onclick="show('menu')">← Início</button>
+      <button class="pn-btn" onclick="show('p0')">← Objetivos</button>
       <button class="pn-btn pn-fwd" onclick="show('p2')">Dado × Informação →</button>
     </div>
   </div>
@@ -786,7 +833,7 @@ body {
   <div class="t-body">
     <div class="t-title">A arquitetura<br><em>limita</em> as perguntas.</div>
     <div class="diagram">
-      <svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <svg viewBox="0 0 700 372" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
         <!-- Layer 1 -->
         <rect x="90" y="18" width="520" height="80" rx="13" fill="#ffffff" stroke="#7a1a1a" stroke-width="1.5"/>
         <rect x="90" y="18" width="520" height="48" rx="13" fill="#7a1a1a" opacity=".05"/>
