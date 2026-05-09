@@ -111,7 +111,7 @@ body {
   transition: border-color .2s, transform .2s, box-shadow .2s;
 }
 
-/* active (aula 1) */
+/* active */
 .lesson.active {
   border-color: var(--c1);
   background: #ffffff;
@@ -124,7 +124,7 @@ body {
 }
 .lesson.active:hover .l-arrow { opacity: 1; transform: translate(2px, -1px); }
 
-/* inactive (aulas 2–8) */
+/* inactive */
 .lesson.off {
   opacity: .46;
   cursor: default;
@@ -146,6 +146,19 @@ body {
 }
 .l-sub {
   font-size: 12px; color: var(--muted); line-height: 1.55;
+}
+
+/* release date label — shown on locked cards by JS */
+.l-date {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 10.5px; color: var(--muted); margin-top: 7px;
+  letter-spacing: .2px;
+}
+.l-date::before {
+  content: '';
+  display: inline-block; width: 5px; height: 5px;
+  border-radius: 50%; border: 1.5px solid var(--border);
+  flex-shrink: 0;
 }
 
 /* arrow */
@@ -177,8 +190,8 @@ body {
   <div class="pill pill-start">Início</div>
   <div class="conn conn-md"></div>
 
-  <!-- 01 — ATIVA -->
-  <a class="lesson active" href="aula1.html">
+  <!-- 01 -->
+  <a class="lesson off" href="aula1.html" data-lesson="1" data-release="2026-05-11T09:00">
     <div class="l-num">1</div>
     <div class="l-info">
       <div class="l-title">O Dado que Você Não Enxerga</div>
@@ -192,83 +205,139 @@ body {
   <div class="conn conn-sm"></div>
 
   <!-- 02 -->
-  <div class="lesson off">
+  <a class="lesson off" href="aula2.html" data-lesson="2" data-release="2026-05-16T09:00">
     <div class="l-num">2</div>
     <div class="l-info">
       <div class="l-title">A Arquitetura do Caos</div>
       <div class="l-sub">Entidades · Atributos · Cardinalidade · Chaves · 1FN · 2FN · 3FN</div>
     </div>
-  </div>
+    <span class="l-arrow">↗</span>
+  </a>
   <div class="conn conn-md"></div>
 
   <!-- 03 -->
-  <div class="lesson off">
+  <a class="lesson off" href="aula3.html" data-lesson="3" data-release="2026-05-23T09:00">
     <div class="l-num">3</div>
     <div class="l-info">
       <div class="l-title">A Linguagem das Respostas</div>
       <div class="l-sub">DDL · DML · SELECT · JOIN · GROUP BY</div>
     </div>
-  </div>
+    <span class="l-arrow">↗</span>
+  </a>
   <div class="conn conn-md"></div>
 
   <!-- 04 -->
-  <div class="lesson off">
+  <a class="lesson off" href="aula4.html" data-lesson="4" data-release="2026-05-30T09:00">
     <div class="l-num">4</div>
     <div class="l-info">
       <div class="l-title">O Refino Analítico</div>
       <div class="l-sub">DW · Star Schema · Snowflake · Fatos · Dimensões</div>
     </div>
-  </div>
+    <span class="l-arrow">↗</span>
+  </a>
 
   <div class="conn conn-md"></div>
   <div class="sect"><span class="sect-label">Avançado</span></div>
   <div class="conn conn-sm"></div>
 
   <!-- 05 -->
-  <div class="lesson off">
+  <a class="lesson off" href="aula5.html" data-lesson="5" data-release="2026-06-06T09:00">
     <div class="l-num">5</div>
     <div class="l-info">
       <div class="l-title">A Visualização do Sucesso</div>
       <div class="l-sub">BI · Tableau · KPIs · Storytelling com dados</div>
     </div>
-  </div>
+    <span class="l-arrow">↗</span>
+  </a>
   <div class="conn conn-md"></div>
 
   <!-- 06 -->
-  <div class="lesson off">
+  <a class="lesson off" href="aula6.html" data-lesson="6" data-release="2026-06-13T09:00">
     <div class="l-num">6</div>
     <div class="l-info">
       <div class="l-title">A Escala do Big Data</div>
       <div class="l-sub">Big Data · NoSQL · MongoDB · JSON</div>
     </div>
-  </div>
+    <span class="l-arrow">↗</span>
+  </a>
   <div class="conn conn-md"></div>
 
   <!-- 07 -->
-  <div class="lesson off">
+  <a class="lesson off" href="aula7.html" data-lesson="7" data-release="2026-06-20T09:00">
     <div class="l-num">7</div>
     <div class="l-info">
       <div class="l-title">O Guardião dos Ativos</div>
       <div class="l-sub">DAMA-DMBOK · LGPD · Segurança · Conformidade</div>
     </div>
-  </div>
+    <span class="l-arrow">↗</span>
+  </a>
 
   <div class="conn conn-md"></div>
   <div class="sect"><span class="sect-label">Projeto</span></div>
   <div class="conn conn-sm"></div>
 
   <!-- 08 -->
-  <div class="lesson off">
+  <a class="lesson off" href="aula8.html" data-lesson="8" data-release="2026-06-27T09:00">
     <div class="l-num">8</div>
     <div class="l-info">
       <div class="l-title">A Prova de Valor</div>
       <div class="l-sub">Caso Master · Apresentação · ER · SQL · Dashboard</div>
     </div>
-  </div>
+    <span class="l-arrow">↗</span>
+  </a>
 
   <div class="conn conn-md"></div>
   <div class="pill pill-end">Fim</div>
 
 </div>
+
+<script>
+  // ── CRONOGRAMA DE LIBERAÇÃO DAS AULAS ─────────────────────────────────────
+  // Altere as datas e horários abaixo para controlar quando cada aula
+  // será habilitada automaticamente (formato ISO: 'AAAA-MM-DDTHH:MM').
+  // O horário usa o fuso do dispositivo do aluno.
+  // ─────────────────────────────────────────────────────────────────────────
+  const SCHEDULE = {
+    1: '2026-05-11T18:00',
+    2: '2026-05-16T08:00',
+    3: '2026-05-16T11:00',
+    4: '2026-05-18T18:00',
+    5: '2026-05-25T18:00',
+    6: '2026-06-01T18:00',
+    7: '2026-06-08T18:00',
+    8: '2026-06-15T18:00',
+  };
+
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    const dia = String(d.getDate()).padStart(2, '0');
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const h   = String(d.getHours()).padStart(2, '0');
+    const m   = String(d.getMinutes()).padStart(2, '0');
+    return `${dia}/${mes} às ${h}h${m}`;
+  }
+
+  const now = new Date();
+
+  document.querySelectorAll('.lesson[data-lesson]').forEach(card => {
+    const releaseISO = SCHEDULE[card.dataset.lesson];
+    if (!releaseISO) return;
+
+    if (new Date(releaseISO) <= now) {
+      // Liberar card
+      card.classList.remove('off');
+      card.classList.add('active');
+    } else {
+      // Mostrar data de liberação
+      const info = card.querySelector('.l-info');
+      if (info) {
+        const label = document.createElement('div');
+        label.className = 'l-date';
+        label.textContent = 'Disponível em ' + fmtDate(releaseISO);
+        info.appendChild(label);
+      }
+    }
+  });
+</script>
 </body>
 </html>
