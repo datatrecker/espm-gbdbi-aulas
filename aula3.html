@@ -94,7 +94,7 @@ body {
 .f { color: #f0c07a; }
 .s { color: #9acd70; }
 .n { color: #c0d8f0; }
-.cm { color: #7a6060; font-style: italic; }
+.cm { color: #c09898; font-style: italic; }
 
 /* ── SCHEMA REFERENCE ── */
 .schema-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 10px; width: 100%; max-width: 720px; margin-bottom: 28px; }
@@ -232,28 +232,28 @@ body {
       <p class="mc-p">Escolha o quê mostrar e de qual tabela — a base de qualquer consulta.</p>
       <span class="mc-arrow">↗</span>
     </button>
-    <button class="mcard" onclick="show('p4')">
+    <button class="mcard" onclick="show('p_where')">
       <div class="mc-num">04</div>
-      <div class="mc-h">WHERE e JOIN</div>
-      <p class="mc-p">Filtre linhas por condição e cruce tabelas pela chave — os dois comandos que transformam dados em respostas.</p>
+      <div class="mc-h">WHERE — Filtrando Linhas</div>
+      <p class="mc-p">Filtre linhas por condição antes de retornar o resultado. Operadores: =, BETWEEN, LIKE, IN, AND, OR.</p>
+      <span class="mc-arrow">↗</span>
+    </button>
+    <button class="mcard" onclick="show('p4')">
+      <div class="mc-num">05</div>
+      <div class="mc-h">JOIN — Cruzando Tabelas</div>
+      <p class="mc-p">INNER, LEFT, RIGHT e FULL OUTER JOIN: cruze tabelas pela chave e entenda o que cada tipo retorna.</p>
       <span class="mc-arrow">↗</span>
     </button>
     <button class="mcard" onclick="show('p5')">
-      <div class="mc-num">05</div>
+      <div class="mc-num">06</div>
       <div class="mc-h">GROUP BY e Agregações</div>
       <p class="mc-p">Agrupe para calcular totais, médias e contagens — a SQL equivalente da tabela dinâmica.</p>
       <span class="mc-arrow">↗</span>
     </button>
     <button class="mcard" onclick="show('p6')">
-      <div class="mc-num">06</div>
-      <div class="mc-h">O que a IA pode e não pode fazer</div>
-      <p class="mc-p">A IA gera código correto sintáticamente. Quem valida se a resposta faz sentido de negócio ainda é o humano.</p>
-      <span class="mc-arrow">↗</span>
-    </button>
-    <button class="mcard" onclick="show('p7')">
       <div class="mc-num">07</div>
-      <div class="mc-h">Atividade Prática — Chinook</div>
-      <p class="mc-p">SQLite Online + dataset Chinook: escreva queries para responder perguntas reais de negócio.</p>
+      <div class="mc-h">O que a IA pode e não pode fazer</div>
+      <p class="mc-p">A IA gera código correto sintaticamente. Quem valida se a resposta faz sentido de negócio ainda é o humano.</p>
       <span class="mc-arrow">↗</span>
     </button>
   </div>
@@ -301,8 +301,11 @@ body {
 
     <!-- SQL demo -->
     <div class="sql-wrap">
-      <div class="sql-label">SQL é quase português — leia em voz alta</div>
-      <div class="sql-block"><code><span class="cm">-- SELECIONE o nome dos artistas</span>
+      <div class="sql-header">
+        <div class="sql-label">SQL é quase português — leia em voz alta</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-demo')">Copiar</button>
+      </div>
+      <div class="sql-block"><code id="c-demo"><span class="cm">-- SELECIONE o nome dos artistas</span>
 <span class="k">SELECT</span> artista_nome
 <span class="cm">-- DA tabela artistas</span>
 <span class="k">FROM</span>   artistas
@@ -310,33 +313,7 @@ body {
 <span class="k">WHERE</span>  artista_genero = <span class="s">'MPB'</span>;</code></div>
     </div>
 
-    <!-- Disc 1: O Problema da Segunda-Feira -->
-    <div class="disc" id="disc-problema">
-      <button class="disc-trigger" onclick="toggleDisc('disc-problema')">
-        <span class="disc-title">O Problema da Segunda-Feira</span>
-        <span class="disc-icon">▶</span>
-      </button>
-      <div class="disc-body">
-        <div class="disc-inner">
-          <div class="ov-concepts">
-            <div class="ov-concept">
-              <h4>Clientes inativos</h4>
-              <p>Quais clientes não compram há mais de seis meses? Marketing precisa da lista para a campanha de reativação.</p>
-            </div>
-            <div class="ov-concept">
-              <h4>Artistas em crescimento</h4>
-              <p>Quais artistas tiveram crescimento de receita nos últimos 12 meses? Curadoria precisa renovar contratos.</p>
-            </div>
-            <div class="ov-concept">
-              <h4>Ticket médio por país</h4>
-              <p>Quais países têm o maior ticket médio? Expansão precisa definir mercados prioritários.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Disc 2: Conceitos Trabalhados -->
+    <!-- Disc 1: Conceitos Trabalhados -->
     <div class="disc" id="disc-conceitos">
       <button class="disc-trigger" onclick="toggleDisc('disc-conceitos')">
         <span class="disc-title">Conceitos Trabalhados</span>
@@ -356,6 +333,32 @@ body {
             <div class="ov-concept">
               <h4>Humano valida, IA gera</h4>
               <p>A IA pode gerar código correto que responde a pergunta errada. A curadoria analítica ainda é humana.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disc 2: O Problema da Segunda-Feira -->
+    <div class="disc" id="disc-problema">
+      <button class="disc-trigger" onclick="toggleDisc('disc-problema')">
+        <span class="disc-title">O Problema da Segunda-Feira</span>
+        <span class="disc-icon">▶</span>
+      </button>
+      <div class="disc-body">
+        <div class="disc-inner">
+          <div class="ov-concepts">
+            <div class="ov-concept">
+              <h4>Clientes inativos</h4>
+              <p>Quais clientes não compram há mais de seis meses? Marketing precisa da lista para a campanha de reativação.</p>
+            </div>
+            <div class="ov-concept">
+              <h4>Artistas em crescimento</h4>
+              <p>Quais artistas tiveram crescimento de receita nos últimos 12 meses? Curadoria precisa renovar contratos.</p>
+            </div>
+            <div class="ov-concept">
+              <h4>Ticket médio por país</h4>
+              <p>Quais países têm o maior ticket médio? Expansão precisa definir mercados prioritários.</p>
             </div>
           </div>
         </div>
@@ -469,7 +472,7 @@ body {
     <div class="sql-wrap">
       <div class="sql-header">
         <div class="sql-label">DDL — Schema completo SoundByte (PostgreSQL)</div>
-        <button class="copy-btn" id="ddl-copy-btn" onclick="copySQL()">Copiar DDL</button>
+        <button class="copy-btn" id="ddl-copy-btn" onclick="copyCode(this,'ddl-code')">Copiar DDL</button>
       </div>
       <div class="sql-block"><code id="ddl-code"><span class="k">CREATE TABLE</span> clientes (
   cliente_id     <span class="f">SERIAL</span>       <span class="k">PRIMARY KEY</span>,
@@ -586,8 +589,11 @@ body {
     </div>
 
     <div class="sql-wrap">
-      <div class="sql-label">Selecionar colunas específicas</div>
-      <div class="sql-block"><code><span class="k">SELECT</span> cliente_nome, cliente_email, cliente_pais
+      <div class="sql-header">
+        <div class="sql-label">Selecionar colunas específicas</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-p3a')">Copiar</button>
+      </div>
+      <div class="sql-block"><code id="c-p3a"><span class="k">SELECT</span> cliente_nome, cliente_email, cliente_pais
 <span class="k">FROM</span>   clientes;</code></div>
     </div>
 
@@ -606,8 +612,11 @@ body {
     </div>
 
     <div class="sql-wrap">
-      <div class="sql-label">Selecionar colunas e ordenar por preço</div>
-      <div class="sql-block"><code><span class="k">SELECT</span> faixa_titulo, faixa_preco_usd, faixa_formato
+      <div class="sql-header">
+        <div class="sql-label">Selecionar colunas e ordenar por preço</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-p3b')">Copiar</button>
+      </div>
+      <div class="sql-block"><code id="c-p3b"><span class="k">SELECT</span> faixa_titulo, faixa_preco_usd, faixa_formato
 <span class="k">FROM</span>   faixas
 <span class="k">ORDER BY</span> faixa_preco_usd <span class="k">DESC</span>;</code></div>
     </div>
@@ -644,7 +653,90 @@ body {
 
     <div class="pg-nav">
       <button class="pn-btn" onclick="show('p2')">← Modelo SoundByte</button>
-      <button class="pn-btn pn-fwd" onclick="show('p4')">WHERE e JOIN →</button>
+      <button class="pn-btn pn-fwd" onclick="show('p_where')">WHERE →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     P_WHERE — WHERE
+══════════════════════════════════════ -->
+<div id="p_where" class="page">
+  <nav class="t-nav">
+    <button class="back" onclick="show('menu')">← Menu</button>
+    <span class="t-label">04 · WHERE</span>
+  </nav>
+  <div class="t-body">
+    <div class="t-title">Filtre as linhas<br><em>que importam.</em></div>
+
+    <div style="font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:10px;width:100%;max-width:720px;">Tabela de origem — clientes</div>
+    <div class="result-wrap">
+      <div class="result-label">Todos os registros (sem filtro)</div>
+      <table class="result-tbl">
+        <thead><tr><th>cliente_id</th><th>cliente_nome</th><th>cliente_email</th><th>cliente_pais</th></tr></thead>
+        <tbody>
+          <tr><td class="num">5001</td><td>Carlos Mendes</td><td>carlos@email.com</td><td>Brasil</td></tr>
+          <tr><td class="num">5002</td><td>Julia Ferreira</td><td>julia@email.com</td><td>Brasil</td></tr>
+          <tr><td class="num">5003</td><td>Yuki Tanaka</td><td>yuki@email.com</td><td>Japão</td></tr>
+          <tr><td class="num">5004</td><td>Emma Clarke</td><td>emma@email.com</td><td>UK</td></tr>
+          <tr><td class="num">5005</td><td>Ana Lima</td><td>ana@email.com</td><td>Brasil</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sql-wrap">
+      <div class="sql-header">
+        <div class="sql-label">WHERE — filtrando por país</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-pw1')">Copiar</button>
+      </div>
+      <div class="sql-block"><code id="c-pw1"><span class="k">SELECT</span> cliente_nome, cliente_email, cliente_pais
+<span class="k">FROM</span>   clientes
+<span class="k">WHERE</span>  cliente_pais = <span class="s">'Brasil'</span>;</code></div>
+    </div>
+
+    <div class="result-wrap">
+      <div class="result-label">Resultado — apenas clientes do Brasil</div>
+      <table class="result-tbl">
+        <thead><tr><th>cliente_nome</th><th>cliente_email</th><th>cliente_pais</th></tr></thead>
+        <tbody>
+          <tr><td>Carlos Mendes</td><td>carlos@email.com</td><td class="hl">Brasil</td></tr>
+          <tr><td>Julia Ferreira</td><td>julia@email.com</td><td class="hl">Brasil</td></tr>
+          <tr><td>Ana Lima</td><td>ana@email.com</td><td class="hl">Brasil</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sql-wrap">
+      <div class="sql-header">
+        <div class="sql-label">Combinando condições — AND, BETWEEN, LIKE</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-pw2')">Copiar</button>
+      </div>
+      <div class="sql-block"><code id="c-pw2"><span class="cm">-- Faixas baratas em formato MP3</span>
+<span class="k">SELECT</span> faixa_titulo, faixa_preco_usd, faixa_formato
+<span class="k">FROM</span>   faixas
+<span class="k">WHERE</span>  faixa_preco_usd <span class="k">BETWEEN</span> <span class="n">1.99</span> <span class="k">AND</span> <span class="n">3.99</span>
+  <span class="k">AND</span>  faixa_formato = <span class="s">'MP3'</span>
+<span class="k">ORDER BY</span> faixa_preco_usd <span class="k">DESC</span>;</code></div>
+    </div>
+
+    <div class="kps">
+      <div class="kp">
+        <div class="kp-tag">Operadores de comparação</div>
+        <div class="kp-text"><code style="font-size:11px;background:var(--s2);padding:1px 5px;border-radius:3px;">=</code> igual &nbsp;·&nbsp; <code style="font-size:11px;background:var(--s2);padding:1px 5px;border-radius:3px;">&lt;&gt;</code> diferente &nbsp;·&nbsp; <code style="font-size:11px;background:var(--s2);padding:1px 5px;border-radius:3px;">&gt;</code> maior &nbsp;·&nbsp; <code style="font-size:11px;background:var(--s2);padding:1px 5px;border-radius:3px;">&lt;</code> menor &nbsp;·&nbsp; <code style="font-size:11px;background:var(--s2);padding:1px 5px;border-radius:3px;">&gt;=</code> <code style="font-size:11px;background:var(--s2);padding:1px 5px;border-radius:3px;">&lt;=</code> maior/menor ou igual.</div>
+      </div>
+      <div class="kp">
+        <div class="kp-tag" style="color:#b83030">BETWEEN · LIKE · IN</div>
+        <div class="kp-text"><strong>BETWEEN a AND b</strong> — intervalo inclusivo &nbsp;·&nbsp; <strong>LIKE '%texto%'</strong> — busca parcial &nbsp;·&nbsp; <strong>IN (a, b, c)</strong> — lista de valores permitidos.</div>
+      </div>
+      <div class="kp">
+        <div class="kp-tag">AND · OR · IS NULL</div>
+        <div class="kp-text"><strong>AND</strong> todas as condições devem ser verdadeiras · <strong>OR</strong> basta uma · <strong>IS NULL</strong> / <strong>IS NOT NULL</strong> verificam ausência de valor — campo vazio não é igual a zero.</div>
+      </div>
+    </div>
+
+    <div class="pg-nav">
+      <button class="pn-btn" onclick="show('p3')">← SELECT e FROM</button>
+      <button class="pn-btn pn-fwd" onclick="show('p4')">JOIN →</button>
     </div>
   </div>
 </div>
@@ -655,62 +747,114 @@ body {
 <div id="p4" class="page">
   <nav class="t-nav">
     <button class="back" onclick="show('menu')">← Menu</button>
-    <span class="t-label">04 · WHERE e JOIN</span>
+    <span class="t-label">05 · JOIN</span>
   </nav>
   <div class="t-body">
-    <div class="t-title">Filtre e cruze.<br><em>A resposta está em duas tabelas.</em></div>
+    <div class="t-title">Cruze tabelas<br><em>pela chave.</em></div>
 
+    <!-- Venn diagram — 4 tipos de JOIN -->
     <div class="diagram">
+      <svg viewBox="0 0 750 168" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <defs>
+          <clipPath id="clip-inner-join"><circle cx="80" cy="85" r="47"/></clipPath>
+        </defs>
+
+        <!-- INNER JOIN -->
+        <text x="102" y="14" text-anchor="middle" fill="#7a1a1a" font-size="9" font-family="system-ui" letter-spacing="2" font-weight="700">INNER JOIN</text>
+        <circle cx="80" cy="85" r="47" fill="#f5ecea" stroke="#dfc9c0" stroke-width="1.5"/>
+        <circle cx="125" cy="85" r="47" fill="#f5ecea" stroke="#dfc9c0" stroke-width="1.5"/>
+        <circle cx="125" cy="85" r="47" clip-path="url(#clip-inner-join)" fill="#7a1a1a" opacity=".82"/>
+        <circle cx="80"  cy="85" r="47" fill="none" stroke="#dfc9c0" stroke-width="1.5"/>
+        <circle cx="125" cy="85" r="47" fill="none" stroke="#dfc9c0" stroke-width="1.5"/>
+        <text x="53"  y="89" text-anchor="middle" fill="#8a6060" font-size="8.5" font-family="system-ui">TABLE1</text>
+        <text x="153" y="89" text-anchor="middle" fill="#8a6060" font-size="8.5" font-family="system-ui">TABLE2</text>
+        <text x="102" y="150" text-anchor="middle" fill="#8a6060" font-size="9" font-family="system-ui" font-style="italic">Apenas registros comuns</text>
+
+        <line x1="185" y1="18" x2="185" y2="142" stroke="#dfc9c0" stroke-width="1" stroke-dasharray="3 3"/>
+
+        <!-- LEFT JOIN -->
+        <text x="286" y="14" text-anchor="middle" fill="#7a1a1a" font-size="9" font-family="system-ui" letter-spacing="2" font-weight="700">LEFT JOIN</text>
+        <circle cx="305" cy="85" r="47" fill="#f5ecea"/>
+        <circle cx="260" cy="85" r="47" fill="#7a1a1a" opacity=".82"/>
+        <circle cx="260" cy="85" r="47" fill="none" stroke="#7a1a1a" stroke-width="1.5"/>
+        <circle cx="305" cy="85" r="47" fill="none" stroke="#dfc9c0" stroke-width="1.5"/>
+        <text x="233" y="89" text-anchor="middle" fill="#fdf8f6" font-size="8.5" font-family="system-ui">TABLE1</text>
+        <text x="333" y="89" text-anchor="middle" fill="#8a6060" font-size="8.5" font-family="system-ui">TABLE2</text>
+        <text x="286" y="150" text-anchor="middle" fill="#8a6060" font-size="9" font-family="system-ui" font-style="italic">Todos da esquerda</text>
+
+        <line x1="370" y1="18" x2="370" y2="142" stroke="#dfc9c0" stroke-width="1" stroke-dasharray="3 3"/>
+
+        <!-- RIGHT JOIN -->
+        <text x="471" y="14" text-anchor="middle" fill="#7a1a1a" font-size="9" font-family="system-ui" letter-spacing="2" font-weight="700">RIGHT JOIN</text>
+        <circle cx="445" cy="85" r="47" fill="#f5ecea"/>
+        <circle cx="490" cy="85" r="47" fill="#7a1a1a" opacity=".82"/>
+        <circle cx="445" cy="85" r="47" fill="none" stroke="#dfc9c0" stroke-width="1.5"/>
+        <circle cx="490" cy="85" r="47" fill="none" stroke="#7a1a1a" stroke-width="1.5"/>
+        <text x="418" y="89" text-anchor="middle" fill="#8a6060" font-size="8.5" font-family="system-ui">TABLE1</text>
+        <text x="518" y="89" text-anchor="middle" fill="#fdf8f6" font-size="8.5" font-family="system-ui">TABLE2</text>
+        <text x="471" y="150" text-anchor="middle" fill="#8a6060" font-size="9" font-family="system-ui" font-style="italic">Todos da direita</text>
+
+        <line x1="555" y1="18" x2="555" y2="142" stroke="#dfc9c0" stroke-width="1" stroke-dasharray="3 3"/>
+
+        <!-- FULL OUTER JOIN -->
+        <text x="656" y="14" text-anchor="middle" fill="#7a1a1a" font-size="9" font-family="system-ui" letter-spacing="2" font-weight="700">FULL OUTER JOIN</text>
+        <circle cx="630" cy="85" r="47" fill="#7a1a1a" opacity=".82"/>
+        <circle cx="675" cy="85" r="47" fill="#7a1a1a" opacity=".82"/>
+        <circle cx="630" cy="85" r="47" fill="none" stroke="#7a1a1a" stroke-width="1.5"/>
+        <circle cx="675" cy="85" r="47" fill="none" stroke="#7a1a1a" stroke-width="1.5"/>
+        <text x="603" y="89" text-anchor="middle" fill="#fdf8f6" font-size="8.5" font-family="system-ui">TABLE1</text>
+        <text x="703" y="89" text-anchor="middle" fill="#fdf8f6" font-size="8.5" font-family="system-ui">TABLE2</text>
+        <text x="656" y="150" text-anchor="middle" fill="#8a6060" font-size="9" font-family="system-ui" font-style="italic">Todos, de ambas as tabelas</text>
+      </svg>
+    </div>
+
+    <!-- Tabelas CLIENTES ↔ PEDIDOS -->
+    <div class="diagram" style="margin-bottom:28px;">
       <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
-        <!-- CLIENTES table -->
         <rect x="20" y="18" width="230" height="170" rx="10" fill="#fff" stroke="#7a1a1a" stroke-width="1.5"/>
         <rect x="20" y="18" width="230" height="36" rx="10" fill="#7a1a1a" opacity=".06"/>
         <rect x="20" y="38" width="230" height="16" fill="#7a1a1a" opacity=".06"/>
         <text x="135" y="42" text-anchor="middle" fill="#7a1a1a" font-size="10" font-family="system-ui" font-weight="800" letter-spacing=".5">CLIENTES</text>
-        <text x="42" y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">CLIENTE_ID</text>
+        <text x="57"  y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">CLIENTE_ID</text>
         <text x="120" y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">NOME</text>
         <text x="185" y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">PAÍS</text>
         <line x1="32" y1="74" x2="238" y2="74" stroke="#f0e0da" stroke-width="1"/>
-        <rect x="32" y="56" width="22" height="13" rx="2" fill="#7a1a1a"/>
-        <text x="43" y="66" text-anchor="middle" fill="#fdf8f6" font-size="7.5" font-family="system-ui" font-weight="800">PK</text>
-        <text x="58" y="96" fill="#1a0d0d" font-size="12" font-family="system-ui" font-weight="600">5001</text>
-        <text x="118" y="96" fill="#1a0d0d" font-size="12" font-family="system-ui">Carlos</text>
-        <text x="185" y="96" fill="#1a0d0d" font-size="12" font-family="system-ui">Brasil</text>
+        <rect x="32" y="59" width="22" height="10" rx="2" fill="#7a1a1a"/>
+        <text x="43" y="67" text-anchor="middle" fill="#fdf8f6" font-size="7.5" font-family="system-ui" font-weight="800">PK</text>
+        <text x="58"  y="96"  fill="#1a0d0d" font-size="12" font-family="system-ui" font-weight="600">5001</text>
+        <text x="118" y="96"  fill="#1a0d0d" font-size="12" font-family="system-ui">Carlos</text>
+        <text x="185" y="96"  fill="#1a0d0d" font-size="12" font-family="system-ui">Brasil</text>
         <line x1="32" y1="104" x2="238" y2="104" stroke="#f5ece8" stroke-width="1"/>
-        <text x="58" y="122" fill="#1a0d0d" font-size="12" font-family="system-ui" font-weight="600">5002</text>
+        <text x="58"  y="122" fill="#1a0d0d" font-size="12" font-family="system-ui" font-weight="600">5002</text>
         <text x="118" y="122" fill="#1a0d0d" font-size="12" font-family="system-ui">Julia</text>
         <text x="185" y="122" fill="#1a0d0d" font-size="12" font-family="system-ui">Brasil</text>
         <line x1="32" y1="130" x2="238" y2="130" stroke="#f5ece8" stroke-width="1"/>
-        <text x="58" y="148" fill="#1a0d0d" font-size="12" font-family="system-ui" font-weight="600">5004</text>
+        <text x="58"  y="148" fill="#1a0d0d" font-size="12" font-family="system-ui" font-weight="600">5004</text>
         <text x="118" y="148" fill="#1a0d0d" font-size="12" font-family="system-ui">Emma</text>
         <text x="185" y="148" fill="#1a0d0d" font-size="12" font-family="system-ui">UK</text>
         <line x1="32" y1="156" x2="238" y2="156" stroke="#f5ece8" stroke-width="1"/>
-        <text x="58" y="174" fill="#8a6060" font-size="12" font-family="system-ui">…</text>
-
-        <!-- JOIN arrow -->
+        <text x="58"  y="174" fill="#8a6060" font-size="12" font-family="system-ui">…</text>
         <line x1="252" y1="96" x2="316" y2="96" stroke="#b83030" stroke-width="1.5" stroke-dasharray="4 3"/>
         <polygon points="316,90 328,96 316,102" fill="#b83030"/>
-        <text x="284" y="86" text-anchor="middle" fill="#b83030" font-size="9" font-family="system-ui" font-weight="700">JOIN</text>
+        <text x="284" y="86"  text-anchor="middle" fill="#b83030" font-size="9" font-family="system-ui" font-weight="700">JOIN</text>
         <text x="284" y="112" text-anchor="middle" fill="#b09898" font-size="8.5" font-family="system-ui">cliente_id</text>
-
-        <!-- PEDIDOS table -->
         <rect x="330" y="18" width="350" height="170" rx="10" fill="#fff" stroke="#b83030" stroke-width="1.5"/>
         <rect x="330" y="18" width="350" height="36" rx="10" fill="#b83030" opacity=".06"/>
         <rect x="330" y="38" width="350" height="16" fill="#b83030" opacity=".06"/>
         <text x="505" y="42" text-anchor="middle" fill="#b83030" font-size="10" font-family="system-ui" font-weight="800" letter-spacing=".5">PEDIDOS</text>
-        <text x="352" y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">PED_ID</text>
-        <text x="406" y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">CLI_ID</text>
+        <text x="368" y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">PED_ID</text>
+        <text x="421" y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">CLI_ID</text>
         <text x="466" y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">DATA</text>
         <text x="566" y="68" fill="#8a6060" font-size="8.5" font-family="system-ui" font-weight="700" letter-spacing="1">TOTAL</text>
         <line x1="342" y1="74" x2="668" y2="74" stroke="#f0e0da" stroke-width="1"/>
-        <rect x="342" y="56" width="22" height="13" rx="2" fill="#7a1a1a"/>
-        <text x="353" y="66" text-anchor="middle" fill="#fdf8f6" font-size="7.5" font-family="system-ui" font-weight="800">PK</text>
-        <rect x="397" y="56" width="20" height="13" rx="2" fill="#b83030"/>
-        <text x="407" y="66" text-anchor="middle" fill="#fdf8f6" font-size="7.5" font-family="system-ui" font-weight="800">FK</text>
-        <text x="358" y="96" fill="#1a0d0d" font-size="12" font-family="system-ui">1001</text>
-        <text x="415" y="96" fill="#b83030" font-size="12" font-family="system-ui" font-weight="600">5001</text>
-        <text x="462" y="96" fill="#1a0d0d" font-size="12" font-family="system-ui">2024-03-01</text>
-        <text x="564" y="96" fill="#1a0d0d" font-size="12" font-family="system-ui">2.99</text>
+        <rect x="342" y="59" width="22" height="10" rx="2" fill="#7a1a1a"/>
+        <text x="353" y="67" text-anchor="middle" fill="#fdf8f6" font-size="7.5" font-family="system-ui" font-weight="800">PK</text>
+        <rect x="397" y="59" width="20" height="10" rx="2" fill="#b83030"/>
+        <text x="407" y="67" text-anchor="middle" fill="#fdf8f6" font-size="7.5" font-family="system-ui" font-weight="800">FK</text>
+        <text x="358" y="96"  fill="#1a0d0d" font-size="12" font-family="system-ui">1001</text>
+        <text x="415" y="96"  fill="#b83030" font-size="12" font-family="system-ui" font-weight="600">5001</text>
+        <text x="462" y="96"  fill="#1a0d0d" font-size="12" font-family="system-ui">2024-03-01</text>
+        <text x="564" y="96"  fill="#1a0d0d" font-size="12" font-family="system-ui">2.99</text>
         <line x1="342" y1="104" x2="668" y2="104" stroke="#f5ece8" stroke-width="1"/>
         <text x="358" y="122" fill="#1a0d0d" font-size="12" font-family="system-ui">1002</text>
         <text x="415" y="122" fill="#b83030" font-size="12" font-family="system-ui" font-weight="600">5002</text>
@@ -727,29 +871,28 @@ body {
     </div>
 
     <div class="sql-wrap">
-      <div class="sql-label">WHERE — Clientes do Brasil</div>
-      <div class="sql-block"><code><span class="k">SELECT</span> cliente_nome, cliente_email
-<span class="k">FROM</span>   clientes
-<span class="k">WHERE</span>  cliente_pais = <span class="s">'Brasil'</span>;</code></div>
-    </div>
-
-    <div class="sql-wrap">
-      <div class="sql-label">JOIN — Pedidos com nome do cliente e valor</div>
-      <div class="sql-block"><code><span class="k">SELECT</span> p.pedido_id,
+      <div class="sql-header">
+        <div class="sql-label">INNER JOIN — Pedidos com nome do cliente</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-p4a')">Copiar</button>
+      </div>
+      <div class="sql-block"><code id="c-p4a"><span class="k">SELECT</span> p.pedido_id,
        p.pedido_data,
        c.cliente_nome,
        c.cliente_pais,
        ip.total_item_usd
-<span class="k">FROM</span>   pedidos p
-<span class="k">JOIN</span>   clientes      c  <span class="k">ON</span> p.cliente_id  = c.cliente_id
-<span class="k">JOIN</span>   itens_pedido  ip <span class="k">ON</span> p.pedido_id   = ip.pedido_id
+<span class="k">FROM</span>   pedidos        p
+<span class="k">JOIN</span>   clientes       c  <span class="k">ON</span> p.cliente_id = c.cliente_id
+<span class="k">JOIN</span>   itens_pedido   ip <span class="k">ON</span> p.pedido_id  = ip.pedido_id
 <span class="k">WHERE</span>  p.pedido_data &gt;= <span class="s">'2024-03-01'</span>
 <span class="k">ORDER BY</span> p.pedido_data;</code></div>
     </div>
 
     <div class="sql-wrap">
-      <div class="sql-label">Respondendo a pergunta — Clientes sem compra há 6 meses</div>
-      <div class="sql-block"><code><span class="k">SELECT</span> c.cliente_nome,
+      <div class="sql-header">
+        <div class="sql-label">LEFT JOIN — Clientes sem compra há 6 meses (PostgreSQL)</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-p4b')">Copiar</button>
+      </div>
+      <div class="sql-block"><code id="c-p4b"><span class="k">SELECT</span> c.cliente_nome,
        c.cliente_email,
        <span class="f">MAX</span>(p.pedido_data) <span class="k">AS</span> ultima_compra
 <span class="k">FROM</span>   clientes c
@@ -757,26 +900,125 @@ body {
 <span class="k">GROUP BY</span> c.cliente_id, c.cliente_nome, c.cliente_email
 <span class="k">HAVING</span>   <span class="f">MAX</span>(p.pedido_data) &lt; <span class="f">CURRENT_DATE</span> - <span class="f">INTERVAL</span> <span class="s">'180 days'</span>
    <span class="k">OR</span>    <span class="f">MAX</span>(p.pedido_data) <span class="k">IS NULL</span>
-<span class="k">ORDER BY</span> ultima_compra <span class="k">ASC</span>;</code></div>
+<span class="k">ORDER BY</span> ultima_compra <span class="k">ASC NULLS LAST</span>;</code></div>
     </div>
 
     <div class="kps">
       <div class="kp">
-        <div class="kp-tag">WHERE</div>
-        <div class="kp-text">Filtra linhas antes de retornar o resultado. Equivale a filtrar por data no Excel. Operadores: =, &gt;, &lt;, &lt;&gt;, BETWEEN, LIKE, IN, AND, OR.</div>
+        <div class="kp-tag">INNER JOIN</div>
+        <div class="kp-text">Retorna apenas linhas com correspondência nas duas tabelas. É o JOIN padrão — equivale a cruzar duas planilhas pelo ID em comum.</div>
       </div>
       <div class="kp">
-        <div class="kp-tag" style="color:#b83030">INNER JOIN</div>
-        <div class="kp-text">Retorna apenas as linhas que têm correspondência nas duas tabelas. É o JOIN padrão — equivale a cruzar duas planilhas pelo ID do cliente.</div>
+        <div class="kp-tag" style="color:#b83030">LEFT JOIN</div>
+        <div class="kp-text">Retorna todas as linhas da tabela esquerda, mesmo sem correspondência na direita. Linhas sem match chegam com NULL — útil para detectar clientes sem pedidos.</div>
       </div>
       <div class="kp">
-        <div class="kp-tag">LEFT JOIN</div>
-        <div class="kp-text">Retorna todas as linhas da tabela da esquerda, mesmo sem correspondência na direita. Útil para encontrar clientes sem pedidos (NULL).</div>
+        <div class="kp-tag">NULLS LAST</div>
+        <div class="kp-text">PostgreSQL: <code style="font-size:11px;background:var(--s2);padding:1px 5px;border-radius:3px;">ORDER BY x ASC NULLS LAST</code> empurra os NULLs para o final — clientes sem nenhuma compra ficam no final da lista.</div>
       </div>
     </div>
 
+    <!-- ── EXERCÍCIO PRÁTICO ── -->
+    <div style="width:100%;max-width:720px;margin-top:44px;margin-bottom:8px;">
+
+      <div class="ov-section-tag" style="margin-bottom:18px;">Exercício Prático</div>
+
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.65;margin-bottom:20px;">
+        Considere as duas tabelas abaixo. Use-as para praticar JOIN no seu navegador.
+      </p>
+
+      <!-- Tabelas de dados -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:24px;">
+        <div style="overflow-x:auto;">
+          <div class="schema-tbl-name" style="margin-bottom:8px;">CLIENTES</div>
+          <table class="result-tbl">
+            <thead>
+              <tr><th>NUM_CLIENTE</th><th>NOME_CLIENTE</th><th>CIDADE</th><th>ESTADO</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="num">1001</td><td>Jose Andrade</td><td>Rio de Janeiro</td><td>RJ</td></tr>
+              <tr><td class="num">1002</td><td>Maria Mendonca</td><td>Campinas</td><td>SP</td></tr>
+              <tr><td class="num">1003</td><td>Marcio Mota</td><td>Curitiba</td><td>PR</td></tr>
+              <tr><td class="num">1004</td><td>Claudia Silva</td><td>Santa Catarina</td><td>SC</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="overflow-x:auto;">
+          <div class="schema-tbl-name" style="margin-bottom:8px;">PEDIDOS</div>
+          <table class="result-tbl">
+            <thead>
+              <tr><th>NUM_PEDIDO</th><th>NUM_CLIENTE</th><th>DATA_PEDIDO</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="num">10</td><td class="num">1001</td><td>2020-03-10</td></tr>
+              <tr><td class="num">20</td><td class="num">1002</td><td>2020-03-11</td></tr>
+              <tr><td class="num">30</td><td class="num">1003</td><td>2020-03-11</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Instruções -->
+      <div class="kp" style="border-left:3px solid var(--c1);margin-bottom:22px;">
+        <div class="kp-tag">Como fazer</div>
+        <div class="kp-text">
+          <ol style="margin:10px 0 2px 18px;line-height:2.1;font-size:13px;">
+            <li>Acesse <a href="https://sqliteonline.com/" target="_blank" rel="noopener" style="color:var(--c1);font-weight:600;">sqliteonline.com</a> e selecione <strong>PGLite</strong> no painel lateral esquerdo.</li>
+            <li>Copie o esquema SQL abaixo, cole no editor e clique em <strong>▶ Run</strong> para criar as tabelas e inserir os dados.</li>
+            <li>Escreva uma nova consulta com <strong>JOIN</strong> que retorne: número do pedido, nome do cliente, data do pedido e estado.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Esquema SQL -->
+      <div class="sql-wrap">
+        <div class="sql-header">
+          <div class="sql-label">Esquema SQL — copie e execute no PGLite</div>
+          <button class="copy-btn" onclick="copyCode(this,'c-ex-schema')">Copiar</button>
+        </div>
+        <div class="sql-block"><code id="c-ex-schema"><span class="cm">-- Tabela de clientes</span>
+<span class="k">CREATE TABLE</span> <span class="n">CLIENTES</span> (
+    <span class="n">Num_Cliente</span>  <span class="f">INTEGER</span>      <span class="k">PRIMARY KEY</span>,
+    <span class="n">Nome_Cliente</span> <span class="f">VARCHAR</span>(<span class="n">100</span>),
+    <span class="n">Cidade</span>       <span class="f">VARCHAR</span>(<span class="n">100</span>),
+    <span class="n">Estado</span>       <span class="f">CHAR</span>(<span class="n">2</span>)
+);
+
+<span class="cm">-- Tabela de pedidos</span>
+<span class="k">CREATE TABLE</span> <span class="n">PEDIDOS</span> (
+    <span class="n">Num_Pedido</span>  <span class="f">INTEGER</span> <span class="k">PRIMARY KEY</span>,
+    <span class="n">Num_Cliente</span> <span class="f">INTEGER</span>,
+    <span class="n">Data_Pedido</span> <span class="f">DATE</span>,
+    <span class="k">FOREIGN KEY</span> (<span class="n">Num_Cliente</span>) <span class="k">REFERENCES</span> <span class="n">CLIENTES</span>(<span class="n">Num_Cliente</span>)
+);
+
+<span class="cm">-- Inserindo dados na tabela CLIENTES</span>
+<span class="k">INSERT INTO</span> <span class="n">CLIENTES</span> (<span class="n">Num_Cliente</span>, <span class="n">Nome_Cliente</span>, <span class="n">Cidade</span>, <span class="n">Estado</span>) <span class="k">VALUES</span>
+(<span class="n">1001</span>, <span class="s">'Jose Andrade'</span>,   <span class="s">'Rio de Janeiro'</span>,  <span class="s">'RJ'</span>),
+(<span class="n">1002</span>, <span class="s">'Maria Mendonca'</span>,  <span class="s">'Campinas'</span>,         <span class="s">'SP'</span>),
+(<span class="n">1003</span>, <span class="s">'Marcio Mota'</span>,    <span class="s">'Curitiba'</span>,         <span class="s">'PR'</span>),
+(<span class="n">1004</span>, <span class="s">'Claudia Silva'</span>,  <span class="s">'Santa Catarina'</span>,   <span class="s">'SC'</span>);
+
+<span class="cm">-- Inserindo dados na tabela PEDIDOS</span>
+<span class="k">INSERT INTO</span> <span class="n">PEDIDOS</span> (<span class="n">Num_Pedido</span>, <span class="n">Num_Cliente</span>, <span class="n">Data_Pedido</span>) <span class="k">VALUES</span>
+(<span class="n">10</span>, <span class="n">1001</span>, <span class="s">'2020-03-10'</span>),
+(<span class="n">20</span>, <span class="n">1002</span>, <span class="s">'2020-03-11'</span>),
+(<span class="n">30</span>, <span class="n">1003</span>, <span class="s">'2020-03-11'</span>);</code></div>
+      </div>
+
+      <!-- Desafio -->
+      <div class="kp" style="background:#fff;border:1.5px solid var(--c1);margin-bottom:0;">
+        <div class="kp-tag" style="color:var(--c1);font-size:10px;letter-spacing:2.5px;">🎯 Desafio</div>
+        <div class="kp-text" style="margin-top:6px;">
+          Escreva uma consulta <strong>JOIN</strong> que retorne uma tabela com as colunas:<br>
+          <strong>Num_Pedido · Nome_Cliente · Data_Pedido · Estado</strong>
+        </div>
+      </div>
+
+    </div><!-- /exercício -->
+
     <div class="pg-nav">
-      <button class="pn-btn" onclick="show('p3')">← SELECT e FROM</button>
+      <button class="pn-btn" onclick="show('p_where')">← WHERE</button>
       <button class="pn-btn pn-fwd" onclick="show('p5')">GROUP BY →</button>
     </div>
   </div>
@@ -788,7 +1030,7 @@ body {
 <div id="p5" class="page">
   <nav class="t-nav">
     <button class="back" onclick="show('menu')">← Menu</button>
-    <span class="t-label">05 · GROUP BY e Agregações</span>
+    <span class="t-label">06 · GROUP BY e Agregações</span>
   </nav>
   <div class="t-body">
     <div class="t-title">Agrupe para<br><em>enxergar padrões.</em></div>
@@ -846,8 +1088,11 @@ body {
     </div>
 
     <div class="sql-wrap">
-      <div class="sql-label">Respondendo a pergunta — Ticket médio por país</div>
-      <div class="sql-block"><code><span class="k">SELECT</span> c.cliente_pais,
+      <div class="sql-header">
+        <div class="sql-label">Respondendo a pergunta — Ticket médio por país</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-p5a')">Copiar</button>
+      </div>
+      <div class="sql-block"><code id="c-p5a"><span class="k">SELECT</span> c.cliente_pais,
        <span class="f">COUNT</span>(<span class="k">DISTINCT</span> p.pedido_id)    <span class="k">AS</span> total_pedidos,
        <span class="f">ROUND</span>(<span class="f">SUM</span>(ip.total_item_usd), <span class="n">2</span>)  <span class="k">AS</span> receita_total,
        <span class="f">ROUND</span>(<span class="f">AVG</span>(ip.total_item_usd), <span class="n">2</span>)  <span class="k">AS</span> ticket_medio
@@ -900,7 +1145,7 @@ body {
 <div id="p6" class="page">
   <nav class="t-nav">
     <button class="back" onclick="show('menu')">← Menu</button>
-    <span class="t-label">06 · O que a IA pode e não pode fazer</span>
+    <span class="t-label">07 · O que a IA pode e não pode fazer</span>
   </nav>
   <div class="t-body">
     <div class="t-title">A IA escreve.<br><em>Você valida.</em></div>
@@ -929,8 +1174,11 @@ body {
     </div>
 
     <div class="sql-wrap" style="margin-bottom:8px;">
-      <div class="sql-label">Exemplo de bom prompt para a IA</div>
-      <div class="sql-block"><code><span class="cm">Tenho um banco PostgreSQL com as tabelas:
+      <div class="sql-header">
+        <div class="sql-label">Exemplo de bom prompt para a IA</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-p6a')">Copiar</button>
+      </div>
+      <div class="sql-block"><code id="c-p6a"><span class="cm">Tenho um banco PostgreSQL com as tabelas:
   - clientes (cliente_id, cliente_nome, cliente_pais)
   - pedidos (pedido_id, cliente_id, pedido_data)
   - itens_pedido (pedido_id, faixa_id, total_item_usd)
@@ -945,8 +1193,11 @@ cadastrado. Ordene do maior para o menor.</span></code></div>
     </div>
 
     <div class="broken-wrap">
-      <div class="broken-label">Query com erros — exercício em sala</div>
-      <div class="broken-block"><code><span class="cm">-- Pergunta: Quais os artistas com maior receita em 2024?
+      <div class="sql-header" style="margin-bottom:8px;">
+        <div class="broken-label" style="margin-bottom:0;flex:1;">Query com erros — exercício em sala</div>
+        <button class="copy-btn" onclick="copyCode(this,'c-p6b')">Copiar</button>
+      </div>
+      <div class="broken-block"><code id="c-p6b"><span class="cm">-- Pergunta: Quais os artistas com maior receita em 2024?
 -- Esta query tem 3 erros. Use a IA para encontrá-los.</span>
 
 <span class="k">SELECT</span> ar.Name <span class="k">AS</span> artista,
@@ -978,15 +1229,13 @@ cadastrado. Ordene do maior para o menor.</span></code></div>
 
     <div class="pg-nav">
       <button class="pn-btn" onclick="show('p5')">← GROUP BY</button>
-      <button class="pn-btn pn-fwd" onclick="show('p7')">Atividade Prática →</button>
+      <button class="pn-btn pn-fwd" onclick="show('menu')">Início →</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     P7 — ATIVIDADE PRÁTICA — CHINOOK
-══════════════════════════════════════ -->
-<div id="p7" class="page">
+<!-- p7 removido conforme solicitado -->
+<div id="p7" class="page" style="display:none!important">
   <nav class="t-nav">
     <button class="back" onclick="show('menu')">← Menu</button>
     <span class="t-label">07 · Atividade Prática — Chinook</span>
@@ -1147,17 +1396,13 @@ cadastrado. Ordene do maior para o menor.</span></code></div>
     document.getElementById(id).classList.toggle('open');
   }
 
-  function copySQL() {
-    const code = document.getElementById('ddl-code');
-    const text = code.innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      const btn = document.getElementById('ddl-copy-btn');
+  function copyCode(btn, codeId) {
+    const code = document.getElementById(codeId);
+    navigator.clipboard.writeText(code.innerText).then(() => {
+      const orig = btn.textContent;
       btn.textContent = 'Copiado ✓';
       btn.classList.add('copied');
-      setTimeout(() => {
-        btn.textContent = 'Copiar DDL';
-        btn.classList.remove('copied');
-      }, 2200);
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2200);
     });
   }
 </script>
